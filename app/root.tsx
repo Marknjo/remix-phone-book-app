@@ -1,3 +1,4 @@
+import { type LinksFunction } from '@remix-run/node';
 import {
   Form,
   Links,
@@ -5,33 +6,44 @@ import {
   Meta,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
+} from '@remix-run/react';
+
+import appStyles from './app.css';
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: 'stylesheet',
+      href: appStyles,
+    },
+  ];
+};
 
 export default function App() {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet='utf-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
         <Meta />
         <Links />
       </head>
       <body>
-        <div id="sidebar">
+        <div id='sidebar'>
           <h1>Remix Contacts</h1>
           <div>
-            <Form id="search-form" role="search">
+            <Form id='search-form' role='search'>
               <input
-                id="q"
-                aria-label="Search contacts"
-                placeholder="Search"
-                type="search"
-                name="q"
+                id='q'
+                aria-label='Search contacts'
+                placeholder='Search'
+                type='search'
+                name='q'
               />
-              <div id="search-spinner" aria-hidden hidden={true} />
+              <div id='search-spinner' aria-hidden hidden={true} />
             </Form>
-            <Form method="post">
-              <button type="submit">New</button>
+            <Form method='post'>
+              <button type='submit'>New</button>
             </Form>
           </div>
           <nav>
