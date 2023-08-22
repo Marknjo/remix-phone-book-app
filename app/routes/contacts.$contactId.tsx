@@ -1,15 +1,23 @@
-import { Form } from '@remix-run/react';
+import { json, type LoaderFunctionArgs } from '@remix-run/node';
+import { Form, useLoaderData } from '@remix-run/react';
+import invariant from 'tiny-invariant';
 import Favorite from '~/components/Favorite';
+import { getContact } from '~/data';
+
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  invariant(params.contactId, 'Missing contactId param');
+
+  const contact = await getContact(params.contactId);
+
+  if (!contact) {
+    throw new Response('Not found', { status: 404, statusText: 'Not Found' });
+  }
+
+  return json({ contact });
+};
 
 export default function Contact() {
-  const contact = {
-    first: 'Your',
-    last: 'Name',
-    avatar: 'https://placekitten.com/g/200/200',
-    twitter: 'your_handle',
-    notes: 'Some notes',
-    favorite: true,
-  };
+  const { contact } = useLoaderData<typeof loader>();
 
   return (
     <section id='contact'>
