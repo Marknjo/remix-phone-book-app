@@ -1,4 +1,6 @@
 export default function Index() {
+  console.log('Component runs 🚩🚩🚩');
+
   return (
     <p id='index-page'>
       This is a demo for Remix.
