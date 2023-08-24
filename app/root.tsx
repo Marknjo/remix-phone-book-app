@@ -55,6 +55,10 @@ export default function App() {
     setQuery(q || '');
   }, [q]);
 
+  const searching =
+    navigation.location &&
+    new URLSearchParams(navigation.location.search).has('q');
+
   return (
     <html lang='en'>
       <head>
@@ -82,8 +86,9 @@ export default function App() {
                 onChange={(event) => setQuery(event.currentTarget.value)}
                 // switched to `value` from `defaultValue`
                 value={query}
+                className={searching ? 'loading' : ''}
               />
-              <div id='search-spinner' aria-hidden hidden={true} />
+              <div id='search-spinner' aria-hidden hidden={!searching} />
             </Form>
             <Form method='post'>
               <button type='submit'>New</button>
@@ -121,7 +126,9 @@ export default function App() {
 
         <main
           id='detail'
-          className={navigation.state === 'loading' ? 'loading' : ''}>
+          className={
+            navigation.state === 'loading' && !searching ? 'loading' : ''
+          }>
           <Outlet />
         </main>
 
